@@ -13,7 +13,7 @@ modules.exports = function (app) {
         res.json(err);
       });
   });
-
+  //post workouts
   app.post("/api/workouts", (req, res) => {
     db.Workout.create({ day: Date.now() })
       .then((workout) => {
