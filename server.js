@@ -1,51 +1,27 @@
+// Dependencies
 const express = require("express");
-const mongojs = require("mongojs");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const path = require("path");
+
+const PORT = process.env.PORT || 3000;
 
 const app = express();
-// const PORT = 3000
-const databaseUrl = "";
-const collections = [""];
 
-const db = mongojs(databaseUrl, collections);
+// Middleware
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
 
-db.on("error", (error) => {
-  console.log("Database Error:", error);
+require("./routes/HTMLroutes.js")(app, path);
+require("./routes/APIroutes.js")(app);
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
-app.get("/all", (req, res) => {
-  db.find({}, (err, found) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(found);
-    }
-  });
-});
-
-app.get("", (req, res) => {
-  db.find().sort({ name: 1 }, (err, found) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(found);
-    }
-  });
-});
-
-app.get("/weight", (req, res) => {
-  db.find().sort({ weight: -1 }, (err, found) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(found);
-    }
-  });
-});
-
-app.listen(3000, () => {
-  console.log("App running on port 3000!");
+// Listen
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}!`);
 });
