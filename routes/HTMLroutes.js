@@ -1,7 +1,6 @@
-const { model } = require("mongoose");
 const path = require("path");
 
-model.exports = (app, path) => {
+module.exports = (app, path) => {
   //home page
   app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
