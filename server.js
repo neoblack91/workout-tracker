@@ -17,9 +17,15 @@ app.use(express.static("public"));
 require("./routes/HTMLroutes.js")(app, path);
 require("./routes/APIroutes.js")(app);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/deep-thoughts",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  }
+);
 
 // Listen
 app.listen(PORT, () => {
