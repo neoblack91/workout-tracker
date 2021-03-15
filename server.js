@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-require("./routes/HTMLroutes.js")(app, path);
-require("./routes/APIroutes.js")(app);
+app.use(require("./routes/HTMLroutes.js"));
+app.use(require("./routes/APIroutes.js"));
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/deep-thoughts",
