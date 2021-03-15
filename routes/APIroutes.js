@@ -3,15 +3,17 @@ const router = require("express").Router();
 
 //get workouts
 router.get("/api/workouts", (req, res) => {
-  db.Workout.find({})
+  db.Workout.aggregate([
+    { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
+  ])
     .then((dbWorkout) => {
-      dbWorkout.forEach((workout) => {
-        var total = 0;
-        workout.exercises.forEach((e) => {
-          total += e.duration;
-        });
-        workout.totalDuration = total;
-      });
+      // dbWorkout.forEach((workout) => {
+      //   var total = 0;
+      //   workout.exercises.forEach((e) => {
+      //     total += e.duration;
+      //   });
+      //   workout.totalDuration = total;
+      // });
 
       res.json(dbWorkout);
     })
@@ -51,13 +53,16 @@ router.post("/api/workouts", ({ body }, res) => {
 
 // get workouts in range
 router.get("/api/workouts/range", (req, res) => {
-  db.Workout.aggregate({})
+  db.Workout.aggregate([
+    { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
+  ])
     .then((dbWorkout) => {
       res.json(dbWorkout);
     })
     .catch((err) => {
       res.json(err);
     });
+  console.log("hey");
 });
 
 module.exports = router;
