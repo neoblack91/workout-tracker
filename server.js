@@ -17,15 +17,12 @@ app.use(express.static("public"));
 app.use(require("./routes/HTMLroutes.js"));
 app.use(require("./routes/APIroutes.js"));
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/deep-thoughts",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  }
-);
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/WorkoutDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+});
 
 // Listen
 app.listen(PORT, () => {
