@@ -14,16 +14,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+app.use(require("./routes/APIroutes.js"));
+app.use(require("./routes/HTMLroutes.js"));
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/WorkoutDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
   useFindAndModify: false,
 });
-
-app.use(require("./routes/APIroutes.js"));
-app.use(require("./routes/HTMLroutes.js"));
-
 // Listen
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
