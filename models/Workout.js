@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-// const today = new Date();
-// const tomorrow = new Date(today);
-// tomorrow.setDate(tomorrow.getDate() + 1);
 const Schema = mongoose.Schema;
 
 const workouts = new Schema({
