@@ -7,14 +7,6 @@ router.get("/api/workouts", (req, res) => {
     { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
   ])
     .then((dbWorkout) => {
-      // dbWorkout.forEach((workout) => {
-      //   var total = 0;
-      //   workout.exercises.forEach((e) => {
-      //     total += e.duration;
-      //   });
-      //   workout.totalDuration = total;
-      // });
-
       res.json(dbWorkout);
     })
     .catch((err) => {
